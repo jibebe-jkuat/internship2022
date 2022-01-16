@@ -15,4 +15,6 @@ The calculations and criteria for selection are also defined here.
 | Total mass | 0.5A < I < 1A  |
 | Motor      |   BLDC     |
 | Voltage rating of motor  | 48V  |
-| power rating of motor  | 1800W  |
+| Power rating of motor  | 1800W  |
+| Desired range      |   100Km     |
+| Desired top speed | 35 km/h  |
