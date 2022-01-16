@@ -13,10 +13,6 @@ The calculations and criteria for selection are also defined here.
 | Mass of vehicle  | 90V  |
 | Mass of batteries | -  |
 | Total mass | 0.5A < I < 1A  |
-
-<br>
-| Specification | Value |
-| ----------- | ----------- |
 | Motor      |   BLDC     |
 | Voltage rating of motor  | 48V  |
 | power rating of motor  | 1800W  |
