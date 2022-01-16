@@ -9,10 +9,10 @@ The calculations and criteria for selection are also defined here.
 | Specification | Value |
 | ----------- | ----------- |
 | Mass of motor      |        |
-| Maximum passenger mass  | 30V < V < 42V  |
-| Mass of vehicle  | 90V  |
-| Mass of batteries | -  |
-| Total mass | 0.5A < I < 1A  |
+| Maximum passenger mass  |  |
+| Mass of vehicle  |  |
+| Mass of batteries |  |
+| Total mass |  |
 | Motor      |   BLDC     |
 | Voltage rating of motor  | 48V  |
 | Power rating of motor  | 1800W  |
