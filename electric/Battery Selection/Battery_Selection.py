@@ -1,4 +1,4 @@
-power_rating_of_motor = 1200    # in watts
+power_rating_of_motor = 600    # in watts
 voltage_rating_of_motor = 48    # in volts
 
 ampere_rating_of_motor = power_rating_of_motor / voltage_rating_of_motor
@@ -9,10 +9,10 @@ ampere_rating_of_motor *= (1+acceleration_percentage)
 
 
 
-running_time = 3   # in hours
+running_time = 2   # in hours
 amperes_hours = ampere_rating_of_motor * running_time
 
-state_of_charge = 50   # in percentage
+state_of_charge = 40   # in percentage
 depth_of_discharge = 100 - state_of_charge
 
 amperes_hours = amperes_hours * (100 / depth_of_discharge)
