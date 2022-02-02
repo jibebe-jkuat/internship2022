@@ -1,8 +1,8 @@
 #include <AFMotor.h>   // import motor library
 #include <Servo.h>      // import servo library
 
-#define echoPin 53
-#define trigPin 52
+#define echoPin 52
+#define trigPin 53
 
 const int buzzer = 51;   //buzzer
 
@@ -18,7 +18,7 @@ AF_DCMotor rightBack(4);
 
 Servo myservo;
 
-byte motorSpeed =55;
+byte motorSpeed =70;
 byte maxDist = 150;
 byte stopDist = 30;
 
@@ -55,6 +55,7 @@ void loop()
   {
     moveForward();
   }
+
   while(distance >= stopDist)                     //Keep checking the object distance until it is within the minimum stopping distance
   {
     distance = getDistance();
@@ -153,6 +154,8 @@ int getDistance()                                   //Measure the distance to an
   Serial.print("Distance: ");
   Serial.print(distance);
   Serial.println(" cm");
+
+  return distance;
 }
 
 
