@@ -6,6 +6,7 @@
 //    Date:      Jan 10,2013
 //    Version: v1.0
 //    by www.seeedstudio.com
+//
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Lesser General Public
 //  License as published by the Free Software Foundation; either
