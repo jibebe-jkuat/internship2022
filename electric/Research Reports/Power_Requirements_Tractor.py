@@ -43,8 +43,10 @@ power_driving = total_force * acceleration * time
 time_values = [time - 8, time - 6, time - 4, time - 2, time, time + 2, time + 4, time + 6, time + 8]
 velocity_values = []
 power_driving_values = []
+neg_power_driving_values = []
 for i in time_values:
     power_driving_values.append(total_force*acceleration*i)
+    neg_power_driving_values.append(- total_force * acceleration * i)
     velocity_values.append(acceleration*i)
 # Graphs
 
@@ -52,20 +54,22 @@ for i in time_values:
 
 
 
-fig, axs = plt.subplots(2, 2)
+fig, (ax1, ax2) = plt.subplots(1, 2)
 
 
-axs[0, 0].plot(time_values, power_driving_values)
-axs[0, 0].set_title('Power in Driving Mode against Time')
-axs[0, 1].plot(time_values, velocity_values)
-axs[0, 1].set_title('Power in Driving Mode against Velocity')
-axs[1, 0].plot(time_values, power_driving_values)
-axs[1, 0].set_title('Power in Driving Mode against Time')
-axs[1, 1].plot(time_values,power_driving_values)
-axs[1, 1].set_title('Power in Driving Mode against Time')
+ax1.plot(time_values, power_driving_values)
+ax1.set_title('Power in Driving Mode against Time')
+ax1.set(xlabel='Time in Seconds', ylabel='Power in Watts')
+ax2.plot(velocity_values,  power_driving_values)
+ax2.set_title('Power in Driving Mode against Velocity')
+ax2.set(xlabel='Velocity in m/s', ylabel='Power in Watts')
+# axs[1, 0].plot(time_values, power_driving_values)
+# axs[1, 0].set_title('Power in Driving Mode against Time')
+# axs[1, 1].plot(time_values,power_driving_values)
+# axs[1, 1].set_title('Power in Driving Mode against Time')
 
-for ax in axs.flat:
-    ax.set(xlabel='Time in Seconds', ylabel='Power in Newtons')
+# for ax in axs.flat:
+#     ax.set(xlabel='Time in Seconds', ylabel='Power in Watts')
 # # Hide x labels and tick labels for top plots and y ticks for right plots.
 # for ax in axs.flat:
 #     ax.label_outer()
