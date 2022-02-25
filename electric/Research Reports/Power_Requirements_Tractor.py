@@ -7,7 +7,7 @@ def convert_to_mps(speed):
 # Specifications
 
 
-top_speed = 11                  # in km/h
+top_speed = 11                 # in km/h
 top_speed_mps = convert_to_mps(top_speed)
 speed_at_rest = 0               # in m/s
 time_taken = 8                  # in seconds. From rest to top speed
@@ -41,30 +41,39 @@ power_driving = total_force * acceleration * time
 
 #Plot Graph of power_driving against time
 time_values = [time - 8, time - 6, time - 4, time - 2, time, time + 2, time + 4, time + 6, time + 8]
+velocity_values = []
 power_driving_values = []
 for i in time_values:
     power_driving_values.append(total_force*acceleration*i)
-
-# plotting the points
-plt.plot(time_values, power_driving_values)
-
-# naming the x axis
-plt.xlabel('Time in Seconds')
-# naming the y axis
-plt.ylabel('Power in Newtons')
-
-# giving a title to my graph
-plt.title('Power in Driving Mode against Time')
-
-# annotate our time
-plt.annotate("Operating point",
-             xy=(time, power_driving),
-             xytext=(time, power_driving+200),
-             arrowprops=dict(facecolor='green', shrink=0.05),)
+    velocity_values.append(acceleration*i)
+# Graphs
 
 
-# function to show the plot
+
+
+
+fig, axs = plt.subplots(2, 2)
+
+
+axs[0, 0].plot(time_values, power_driving_values)
+axs[0, 0].set_title('Power in Driving Mode against Time')
+axs[0, 1].plot(time_values, velocity_values)
+axs[0, 1].set_title('Power in Driving Mode against Velocity')
+axs[1, 0].plot(time_values, power_driving_values)
+axs[1, 0].set_title('Power in Driving Mode against Time')
+axs[1, 1].plot(time_values,power_driving_values)
+axs[1, 1].set_title('Power in Driving Mode against Time')
+
+for ax in axs.flat:
+    ax.set(xlabel='Time in Seconds', ylabel='Power in Newtons')
+# # Hide x labels and tick labels for top plots and y ticks for right plots.
+# for ax in axs.flat:
+#     ax.label_outer()
+
 plt.show()
+# ----------------------Graph of power against Velocity --------------
+
+
 
 
 # 2. Power required to maintain the tractor at top speed in driving mode
