@@ -1,4 +1,4 @@
-power_rating_of_motor = 600    # in watts
+power_rating_of_load = 600    # in watts
 voltage_rating_of_motor = 48    # in volts
 
 ampere_rating_of_motor = power_rating_of_motor / voltage_rating_of_motor
