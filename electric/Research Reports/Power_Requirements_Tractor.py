@@ -65,7 +65,7 @@ ax2.set_title('Power in Driving Mode against Velocity')
 ax2.set(xlabel='Velocity in m/s', ylabel='Power in Watts')
 
 
-
+plt.show()
 
 
 # 2. Power required to maintain the tractor at top speed in driving mode
