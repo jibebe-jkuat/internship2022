@@ -60,13 +60,24 @@ float speed_km_h_value = 0.0;
 //------------------------------------------------------------------------------------//
 
 //-----------------------------------BATTERY PERCENTAGE INITS-------------------------//
-float battery_percentage = 0.0;
+int battery_percentage = 0;
+float         offsetVoltage = 2539.062;
+int           currentPin = A1;
+int           singleValue, adcValue, rawSensorValue;
+float         sensitivity = 33;
+float         currentValue, adcVoltage, samples;
+unsigned long startMillis;  //some global variables available anywhere in the program
+unsigned long currentMillis;
+const int     period = 1000;  //the value is a number of milliseconds
+const byte    ledPin = 13;    //using the built in LED
+double        totalCoulombs = 0.0;
+const int     capacity = 48;
+
 //-----------------------------------------------------------------------------------//
 
 //-----------------------------------SPEED CONTROL INITS----------------------------//
 int speedOutput = DAC1;
-float samples = 0.0;
-int singleValue, currentValue, checkValue, midValue, x, prevValue = 0;
+int  checkValue, midValue, x, prevValue = 0;
 float currentPotVal;
 int throttle = A0;
 //---------------------------------------------------------------------------------//
@@ -93,6 +104,10 @@ void setup() {
 
   //---SPEED CONTROL
   analogWriteResolution(8);
+
+  //---BATTERY
+  pinMode (currentPin, INPUT);
+  startMillis = millis();  //initial start time
   
 
 }
@@ -114,10 +129,29 @@ void loop() {
 /*-------------------------------------------------------------CALCULATE BATTERY PERCENTAGE ------------------------------------------------------**/
 
 float calculateBattPercentage(){
-  float batt_percentage = 0.0;
+  adcValue = readAnalog(currentPin);
+  adcVoltage   = (adcValue / 1024.0) * 5000;
+  currentValue = ((adcVoltage - offsetVoltage) / sensitivity);
+  int batt_percentage =   getCoulombs(currentValue);;
   return batt_percentage;
 }
 
+
+int getCoulombs(float current)
+{
+  currentMillis = millis();  //get the current "time" (actually the number of milliseconds since the program started)
+  if ( (currentMillis - startMillis) < period){  //test whether the period has elapsed, if not, return.
+    return -1;
+  }
+  
+    totalCoulombs = totalCoulombs + current;
+    float usedCoulombs = totalCoulombs/3600.0;
+    startMillis = currentMillis;  //IMPORTANT to save the start time of the current LED state.
+    float batt_per =   ((capacity - usedCoulombs) / capacity) * 100;
+    return batt_per;
+
+   
+}
 /*------------------------------------------------------------CALCULATE VELOCITY--------------------------------------------------------------*/
 float calculateVelocity(){
   /*Calculate velocity from number of hall sensor trips and returns velocity in km/h*/
@@ -179,7 +213,7 @@ void speedControl(){
     if (currentValue != prevValue){
       if (prevValue < currentValue){
         for (x = prevValue; x < currentValue; x++){          //Get 10 samples
-          checkValue = readThrottle();
+          checkValue = readAnalog(throttle);
           if (checkValue != currentValue){
             break;
           }
@@ -189,7 +223,7 @@ void speedControl(){
 
       if (prevValue > currentValue){
         for (x = currentValue; x > prevValue; x--){          //Get 10 samples
-          checkValue = readThrottle();
+          checkValue = readAnalog(throttle);
           if (abs (checkValue != currentValue)){
             break;
           }
@@ -204,15 +238,18 @@ void speedControl(){
 
 
 /*--------------------------------------------------------------LCD DISPLAY--------------------------------------------------------------------------------------*/
-void lcdDisplayBattAndSpeed(float battery_percentage, float speed_km_h){
+void lcdDisplayBattAndSpeed(int battery_percentage, float speed_km_h){
   String batStr = "BATTERY: ";
   String speedStr = "KM/H: ";
 
   String final_bat_str = batStr + battery_percentage;
   String final_speed_str = speedStr + speed_km_h;
 
-  lcd.setCursor(0,0); //topLeft
-  lcd.print(final_bat_str);
+  if (battery_percentage != -1){
+    lcd.setCursor(0,0); //topLeft
+    lcd.print(final_bat_str);
+  }
+  
   lcd.setCursor(0,1);//bottomLeft
   lcd.print(final_speed_str);
   
