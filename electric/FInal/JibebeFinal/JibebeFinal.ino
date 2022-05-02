@@ -160,11 +160,11 @@ float calculateVelocity(){
 }
 
 /**-------------------------------------------------------------SPEED CONTROL-----------------------------------------------------------------**/
-int readAnalog(int throttle){
+int readAnalog(int analogPin){
   samples = 0.0;
 
   for (int i = 0; i < 10; i++){          //Get 10 samples
-     singleValue = analogRead(throttle);     //Read current sensor values
+     singleValue = analogRead(analogPin);     //Read current sensor values
      samples += singleValue;        //Add samples together
      }
     
